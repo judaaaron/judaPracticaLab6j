@@ -260,19 +260,19 @@ public class MainMessenger extends javax.swing.JFrame {
         metodosCadena m = new metodosCadena();
         int pos = cadena.indexOf(':');// uso del index of para saber su posicion y asi poder usar el metodo de substring
         String nueva = cadena.substring(pos + 2, cadena.length());
-        String neww=cadena.substring(pos + 2, cadena.length()-1);
+        String neww = cadena.substring(pos + 2, cadena.length() - 1);
         if (nueva.length() < 13) {
             JOptionPane.showMessageDialog(null, "La cadena debe de ser mayor a 13");
         } else if (nueva.length() >= 13 && nueva.charAt(nueva.length() - 1) == '1') {
             JOptionPane.showMessageDialog(null, "entro a la opcion1");
-            // area1.setText("Usuario: "+nueva);
             String nueva2 = m.concatenado(neww);
             area1.setText("Usuario: " + neww + "\n" + "Maquina: " + nueva2);
 
         } else if (nueva.length() >= 13 && nueva.charAt(nueva.length() - 1) == '2') {
             JOptionPane.showMessageDialog(null, "entro a la opcion2");
-            m.ReplaceAscii(nueva);
-           area1.setText("Usuario: " + nueva + "\n" + "Maquina: ");
+            String nn = m.ReplaceAscii(neww);
+            //m.ReplaceAscii(nueva);
+            area1.setText("Usuario: " + neww + "\n" + "Maquina: " + nn + " ");
 
         } else if (nueva.length() >= 13 && nueva.charAt(nueva.length() - 1) == '3') {
             JOptionPane.showMessageDialog(null, "entro a la opcion 3");

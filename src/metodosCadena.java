@@ -37,8 +37,8 @@ public class metodosCadena {
 
     }
 
-    public void ReplaceAscii(String chain) {
-
+    public String ReplaceAscii(String chain) {
+        String cadenaFinal = " ";
         char c;
         int ascii, num = 0, letra;
         // chain = chain.toLowerCase();
@@ -48,18 +48,19 @@ public class metodosCadena {
 
             ascii = c;// le asigno ascii el numero de posicion en donde se encuentra la letra
             if (ascii >= 65 && ascii <= 90) {
-                num = ascii + ' ';
-               // System.out.print(num + " ");
+                num = ascii;
+                // System.out.print(num + " ");
             } else if (ascii >= 97 && ascii <= 122) {// utilizando el
-                num = ascii + ' ';
-               // System.out.print(num + " ");
+                num = ascii;
+                // System.out.print(num + " ");
 
             } else if (num == 0) {
                 System.out.print("");
             }
-
+            cadenaFinal += num + " ";
         }
-        System.out.println();
+        // System.out.println();
+        return cadenaFinal;
 
     }
 
