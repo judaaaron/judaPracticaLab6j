@@ -25,13 +25,13 @@ public class MainMessenger extends javax.swing.JFrame {
         setResizable(false);
         setTitle(" Messenger");
         this.setLocationRelativeTo(null);
-        
+
         adminUsuaurios ap = new adminUsuaurios("./Users.txt");
         ap.cargarArchivo();
-        
+
         for (Usuario p : ap.getPersonitas()) {
             personas.add(p);
-            
+
         }
     }
 
@@ -57,6 +57,12 @@ public class MainMessenger extends javax.swing.JFrame {
         bt_regresar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         perfil = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        area1 = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        tf_metodos = new javax.swing.JTextField();
+        bt_enviar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -108,8 +114,32 @@ public class MainMessenger extends javax.swing.JFrame {
 
         perfil.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        area1.setColumns(20);
+        area1.setRows(5);
+        jScrollPane1.setViewportView(area1);
+
+        perfil.getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 520, 330));
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        perfil.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 210, 330));
+        perfil.getContentPane().add(tf_metodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 510, 100));
+
+        bt_enviar.setText("Enviar");
+        bt_enviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_enviarActionPerformed(evt);
+            }
+        });
+        perfil.getContentPane().add(bt_enviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 360, 170, 80));
+
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo.jpg"))); // NOI18N
-        perfil.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 550));
+        perfil.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 470));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -182,9 +212,9 @@ public class MainMessenger extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
-        
+
         JOptionPane.showMessageDialog(this, " Ha sido registrado exitosamente");
-        
+
         tf_user.setText("");
         tf_pass.setText("");
         tf_display.setText("");
@@ -197,7 +227,7 @@ public class MainMessenger extends javax.swing.JFrame {
         String dis = tf_dis.getText();
         String pas = tf_paas.getText();
         boolean entrar = false;
-        System.out.println(personas.get(0).getDisplay());
+        tf_metodos.setText(dis + ": ");
         for (int i = 0; i < personas.size(); i++) {
             if (personas.get(i).getDisplay().equals(dis) && personas.get(i).getPassword().equals(pas)) {
                 JOptionPane.showMessageDialog(this, " Bienvenido " + dis);
@@ -205,15 +235,16 @@ public class MainMessenger extends javax.swing.JFrame {
                 perfil.setModal(true);
                 perfil.setLocationRelativeTo(this);
                 perfil.setVisible(true);
+
                 entrar = true;
                 // flag = i;
                 tf_dis.setText("");
                 tf_paas.setText("");
-                
+
                 break;
-                
-            }            
-            
+
+            }
+
         }
         //  System.out.println(entrar);
 
@@ -223,6 +254,37 @@ public class MainMessenger extends javax.swing.JFrame {
             tf_pass.setText("");
         }
     }//GEN-LAST:event_bt_inMouseClicked
+
+    private void bt_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_enviarActionPerformed
+        String cadena = tf_metodos.getText();
+        metodosCadena m = new metodosCadena();
+        int pos = cadena.indexOf(':');// uso del index of para saber su posicion y asi poder usar el metodo de substring
+        String nueva = cadena.substring(pos + 2, cadena.length());
+        String neww=cadena.substring(pos + 2, cadena.length()-1);
+        if (nueva.length() < 13) {
+            JOptionPane.showMessageDialog(null, "La cadena debe de ser mayor a 13");
+        } else if (nueva.length() >= 13 && nueva.charAt(nueva.length() - 1) == '1') {
+            JOptionPane.showMessageDialog(null, "entro a la opcion1");
+            // area1.setText("Usuario: "+nueva);
+            String nueva2 = m.concatenado(neww);
+            area1.setText("Usuario: " + neww + "\n" + "Maquina: " + nueva2);
+
+        } else if (nueva.length() >= 13 && nueva.charAt(nueva.length() - 1) == '2') {
+            JOptionPane.showMessageDialog(null, "entro a la opcion2");
+            m.ReplaceAscii(nueva);
+           area1.setText("Usuario: " + nueva + "\n" + "Maquina: ");
+
+        } else if (nueva.length() >= 13 && nueva.charAt(nueva.length() - 1) == '3') {
+            JOptionPane.showMessageDialog(null, "entro a la opcion 3");
+            String nueva2 = m.patron3(neww);
+            area1.setText("Usuario: " + neww + "\n" + "Maquina: " + nueva2);
+        } else if (nueva.length() >= 13 && nueva.charAt(nueva.length() - 1) == '4') {
+            JOptionPane.showMessageDialog(null, "entro a la opcion 4");
+        } else {
+            JOptionPane.showMessageDialog(null, "La cadena no posee ningun numero dentro del rango solicitado");
+        }
+
+    }//GEN-LAST:event_bt_enviarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,6 +322,8 @@ public class MainMessenger extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea area1;
+    private javax.swing.JButton bt_enviar;
     private javax.swing.JButton bt_exit;
     private javax.swing.JButton bt_in;
     private javax.swing.JButton bt_registrar;
@@ -274,16 +338,20 @@ public class MainMessenger extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private com.toedter.calendar.JDateChooser j_calendario;
     private javax.swing.JDialog jd_registrarse;
     private javax.swing.JLabel lb_regis;
     private javax.swing.JDialog perfil;
     private javax.swing.JTextField tf_dis;
     private javax.swing.JTextField tf_display;
+    private javax.swing.JTextField tf_metodos;
     private javax.swing.JPasswordField tf_paas;
     private javax.swing.JPasswordField tf_pass;
     private javax.swing.JTextField tf_user;
     // End of variables declaration//GEN-END:variables
    ArrayList<Usuario> personas = new ArrayList();
-    
+
 }
